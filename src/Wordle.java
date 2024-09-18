@@ -1,12 +1,22 @@
 import java.util.*;
 import java.io.*;
 
+/**
+ * Wordle is a word guessing game where the player tries to guess a randomly selected word
+ * within 6 attempts. The words are color-coded based on correctness.
+ * @author Rujul Waval
+ */
 public class Wordle {
 
     public static final String RESET = "\u001B[0m";
     public static final String GREEN = "\u001B[32m";
     public static final String YELLOW = "\u001B[33m";
 
+    /**
+     * Main method to start the Wordle game.
+     * 
+     * @param args Command-line arguments (not used).
+     */
     public static void main(String args[]) {
         Scanner scnr = new Scanner(System.in);
 
@@ -20,6 +30,12 @@ public class Wordle {
         scnr.close(); // Close the scanner to prevent resource leak
     }
 
+    /**
+     * Displays the start menu and prompts user to choose a difficulty level.
+     * 
+     * @param scnr Scanner object for user input.
+     * @return Difficulty option selected by the user ("E", "M", or "H").
+     */
     public static String displayStart(Scanner scnr) {
         System.out.println("             Welcome to WORDLE!");
         System.out.println("             A word guessing game.");
@@ -42,7 +58,12 @@ public class Wordle {
             return displayStart(scnr);
         }
     }
-
+    /**
+     * Generates a random word based on the selected difficulty level.
+     * 
+     * @param option Difficulty level selected by the user.
+     * @return A randomly selected word from the corresponding word list.
+     */
     public static String generateWordle(String option) {
         Scanner read = null; // Declare read outside the if-else blocks
 
@@ -74,6 +95,13 @@ public class Wordle {
         }
     }
 
+    /**
+     * Handles all guesses made by the player and checks for win conditions.
+     * 
+     * @param option Difficulty level selected by the user.
+     * @param wordle The word to be guessed.
+     * @param scnr   Scanner object for user input.
+     */
     public static void allGuesses(String option, String wordle, Scanner scnr) {
         int diff = 0; // Initialize diff to avoid compilation error
 
@@ -111,6 +139,14 @@ public class Wordle {
         }
     }
 
+    /**
+     * Provides feedback on the player's guess, marking correct letters as green
+     * and partially correct letters as yellow.
+     * 
+     * @param guess  The player's guess.
+     * @param wordle The correct word.
+     * @return A color-coded string representation of the guess.
+     */
     public static String correctGuesses(String guess, String wordle) {
         StringBuilder finalGuess = new StringBuilder();
 
@@ -134,6 +170,13 @@ public class Wordle {
         return finalGuess.toString();
     }
 
+    /**
+     * Prompts the player to make a guess.
+     * 
+     * @param diff  The number of letters required for the guess.
+     * @param scnr  Scanner object for user input.
+     * @return The player's guess.
+     */
     public static String guess(int diff, Scanner scnr) {
         String guess = "";
         while (guess.length() != diff) {
@@ -142,6 +185,13 @@ public class Wordle {
         return guess;
     }
 
+    /**
+     * Checks if the player's guess matches the correct word.
+     * 
+     * @param result The result of the guess with color-coding.
+     * @param wordle The correct word.
+     * @return True if the guess is correct, false otherwise.
+     */
     public static boolean checkWin(String result, String wordle) {
         // Remove color codes and check if the result matches the wordle
         String cleanResult = result.replace(GREEN, "").replace(RESET, "").replace(YELLOW, "").replace("[", "").replace("]", "");
